@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="insert cat name" />
+
+    <button>search</button>
+    <hr />
+    <div></div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        var key = "AIzaSyAND62-Fh-XgNVwDOIbpDATCA-xHe-W4sQ";
+        var client_key = "challange";
+        $("button").click(function () {
+if ($("input").val()!="") {
+    $("div").empty();
+    var url ="https://tenor.googleapis.com/v2/search?q=" + $("input").val() + "&key=" + key + "&client_key=" +
+            client_key +
+            "&limit=10";
+            let http = new XMLHttpRequest();
+            http.onreadystatechange = function() {
+  if (http.readyState === 4 && http.status === 200) {
+   var data =  JSON.parse(http.responseText);
+  data.results.forEach((element) => {
+              var currentgif = element.media_formats.gif;
+               $("div").append(
+                 "<img src='" +
+                   currentgif.url +
+                   "' width='100px' height='100px'>"
+               );
+
+             });
+    
+  }
+};
+http.open('GET', url);
+http.send();
+
+}else{
+    alert("you sould insert cat name for search")
+}
+        });
+      });
+    </script>
+  </body>
+</html>
